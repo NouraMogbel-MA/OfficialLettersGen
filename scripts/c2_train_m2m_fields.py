@@ -1,7 +1,7 @@
 # Method 2: facebook/m2m100_418M fine-tuned on the full input (question + extracted content fields).
 # Target = the real letter only (no student frame, no template sentence). Same settings as method 1:
 # lr 2e-5, up to 15 epochs, early stopping (patience 3) on dev loss, warmup 10%, label padding -100.
-# Generation: 3 runs, same decoding as method 1 (incl. no_repeat_ngram_size=3); plus one ablation run without it.
+# Generation: 3 runs, same decoding as method 1 (incl. no_repeat_ngram_size=3).
 import subprocess, sys
 subprocess.run([sys.executable, '-m', 'pip', 'install', '-q', 'sentencepiece', 'datasets', 'accelerate'], check=False)
 import os, json, time, math, torch, pandas as pd
@@ -54,7 +54,7 @@ if not os.path.exists(f'{OUT}/best/config.json'):
     print('trained, dev_loss', ev['eval_loss'], 'epochs', t.state.epoch, flush=True)
     del t, model; torch.cuda.empty_cache()
 model = M2M100ForConditionalGeneration.from_pretrained(f'{OUT}/best').cuda().eval()
-runs = [(1, 1, 3), (2, 2, 3), (3, 3, 3), ('1_nongram', 1, 0)]
+runs = [(1, 1, 3), (2, 2, 3), (3, 3, 3)]
 for name, seed, ng in runs:
     p = f'{OUT}/gen_run{name}.csv'
     if os.path.exists(p): continue
@@ -65,7 +65,7 @@ for name, seed, ng in runs:
         with torch.no_grad():
             o = model.generate(**x, max_length=1024, min_length=128, temperature=0.3, top_k=50, top_p=0.95,
                                do_sample=True, forced_bos_token_id=tok.get_lang_id('ar'), **kw)
-        rows.append({'question': d['question'], 'ground_truth': d['letter'], 'answer': tok.decode(o[0], skip_special_tokens=True)})
-    pd.DataFrame(rows).to_csv(p, index=False, encoding='utf-8-sig')
+        rows.append({'doc_id': d['doc_id'], 'question': d['question'], 'ground_truth': d['letter'], 'answer': tok.decode(o[0], skip_special_tokens=True)})
+    pd.DataFrame(rows).to_csv(p, index=False, encoding='utf-16', sep='\t')
     print('saved', p, flush=True)
 print('M2M DONE', flush=True)

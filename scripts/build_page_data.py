@@ -31,8 +31,8 @@ for k, d in enumerate(test):
                     'info': d['input'], 'original': d['letter'], 'methods': {}})
 for key, name, model in METHODS:
     for run in (1, 2, 3):
-        out = pd.read_csv(J('outputs', key, f'gen_run{run}.csv'), encoding='utf-8-sig')
-        rg = pd.read_csv(J('results', f'ragas_{key}_run{run}.csv'), encoding='utf-8-sig')
+        out = pd.read_csv(J('outputs', key, f'gen_run{run}.csv'), encoding='utf-16', sep='\t')
+        rg = pd.read_csv(J('results', f'ragas_{key}_run{run}.csv'), encoding='utf-16', sep='\t')
         assert len(out) == len(rg) == len(test)
         for k in range(len(test)):
             f = rg.faithfulness.iloc[k]

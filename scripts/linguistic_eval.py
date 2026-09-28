@@ -64,8 +64,8 @@ def profile(texts, types):
 
 if __name__ == '__main__':
     sets = json.loads(sys.argv[1])            # {"name": "path.csv", ...}
-    test = pd.read_csv(E + 'test.csv', encoding='utf-8-sig')
-    corp = pd.read_csv(E + 'corpora.csv', encoding='utf-8-sig')
+    test = pd.read_csv(E + 'test.csv', encoding='utf-16', sep='\t')
+    corp = pd.read_csv(E + 'corpora.csv', encoding='utf-16', sep='\t')
     key = lambda s: re.sub(r'[^\u0621-\u064A0-9]', '', str(s))
     ck = [(key(t), t) for t in corp.Text.astype(str)]
     refs = []
@@ -74,10 +74,10 @@ if __name__ == '__main__':
     types = [qtype(q) for q in test.question]
     cols = {'الخطابات الحقيقية (مرجع)': profile(refs, types)}
     for name, path in sets.items():
-        d = pd.read_csv(path, encoding='utf-8-sig')
+        d = pd.read_csv(path, encoding='utf-16', sep='\t')
         assert list(d.question) == list(test.question), path
         cols[name] = profile(d.answer.astype(str).tolist(), types)
     out = pd.DataFrame(cols).round(3)
     print(out.to_string())
-    out.to_csv(sys.argv[2], encoding='utf-8-sig')
+    out.to_csv(sys.argv[2], encoding='utf-16', sep='\t')
     print(pd.Series(types).value_counts().to_dict())

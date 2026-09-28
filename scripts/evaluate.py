@@ -8,7 +8,7 @@ import linguistic_eval as L, extra_eval as X
 H = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))   # repository root
 data = json.load(open(f'{H}/data/inputs.json', encoding='utf-8'))['test']
 F = json.load(open(f'{H}/data/fields.json', encoding='utf-8'))
-test = pd.read_csv(L.E + 'test.csv', encoding='utf-8-sig')
+test = pd.read_csv(L.E + 'test.csv', encoding='utf-16', sep='\t')
 assert [d['question'] for d in data] == list(test.question)
 types = [d['qtype'] for d in data]; real = [d['letter'] for d in data]
 COND = {  # method -> list of generation files (one per run)
@@ -18,7 +18,7 @@ COND = {  # method -> list of generation files (one per run)
     'c4_allam_few': sorted(glob.glob(f'{H}/outputs/c4_allam_few/gen_run[123].csv')),
     'c5_allam_ling': sorted(glob.glob(f'{H}/outputs/c5_allam_ling/gen_run[123].csv')),
 }
-EXTRA = {'c2_m2m_fields_nongram': [f'{H}/outputs/c2_m2m_fields/gen_run1_nongram.csv']}
+EXTRA = {}
 AD = str.maketrans('٠١٢٣٤٥٦٧٨٩', '0123456789')
 FRAME = re.compile(r'^\s*السيد/السيدة المحترم/ة\s*[,،]\s*')
 
@@ -42,7 +42,7 @@ def title(t):
 
 
 def load(p):
-    d = pd.read_csv(p, encoding='utf-8-sig')
+    d = pd.read_csv(p, encoding='utf-16', sep='\t')
     assert list(d.question) == list(test.question), p
     return [FRAME.sub('', str(a)) for a in d.answer.fillna('')]
 
@@ -138,4 +138,4 @@ if __name__ == '__main__':
             res[c + '_n'] = len(runs)
     json.dump(res, open(f'{H}/results/ling_info.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     df = pd.DataFrame({k: v for k, v in res.items() if not k.endswith(('_range', '_n'))}).round(3)
-    df.to_csv(f'{H}/results/ling_info.csv', encoding='utf-8-sig'); print(df.to_string())
+    df.to_csv(f'{H}/results/ling_info.csv', encoding='utf-16', sep='\t', index_label='indicator'); print(df.to_string())

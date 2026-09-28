@@ -12,7 +12,7 @@ ds = EvaluationDataset.from_list(rows)
 res = evaluate(ds, metrics=[context_precision, faithfulness, answer_relevancy, context_recall, answer_correctness],
                run_config=RunConfig(max_workers=6, timeout=240, max_retries=6), raise_exceptions=False, show_progress=False)
 df = res.to_pandas()
-df.to_csv(out, index=False, encoding='utf-8-sig')
+df.to_csv(out, index=False, encoding='utf-16', sep='\t')
 m = ['context_precision', 'faithfulness', 'answer_relevancy', 'context_recall', 'answer_correctness']
 print(df[m].describe().round(4).to_string())
 print('NaN per metric:', df[m].isna().sum().to_dict())

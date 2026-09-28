@@ -6,7 +6,7 @@ H = E.H
 LI = json.load(open(f'{H}/results/ling_info.json', encoding='utf-8'))
 M = ['context_precision', 'faithfulness', 'answer_relevancy', 'context_recall', 'answer_correctness']
 out = {'ling': {}, 'ragas': {}, 'kp': {}, 'n_runs': {}, 'copied_examples': None}
-for c in list(E.COND) + ['real', 'c2_m2m_fields_nongram']:
+for c in list(E.COND) + ['real']:
     if c in LI:
         out['ling'][c] = {'mean': LI[c], 'range': LI.get(c + '_range'), 'n': LI.get(c + '_n')}
 for c in list(E.COND) + ['real']:
@@ -15,7 +15,7 @@ for c in list(E.COND) + ['real']:
         r = json.load(open(p)); v = [sum(s) / len(s) for s in r.values() if s]
         kp.append(float(np.mean(v)))
     if kp: out['kp'][c] = {'mean': float(np.mean(kp)), 'min': min(kp), 'max': max(kp), 'n': len(kp)}
-    rg = [pd.read_csv(p, encoding='utf-8-sig') for p in sorted(glob.glob(f'{H}/results/ragas_{c}_run[0-9].csv'))]
+    rg = [pd.read_csv(p, encoding='utf-16', sep='\t') for p in sorted(glob.glob(f'{H}/results/ragas_{c}_run[0-9].csv'))]
     if rg:
         out['ragas'][c] = {m: {'mean': float(np.mean([d[m].mean() for d in rg])), 'min': float(min(d[m].mean() for d in rg)),
                                'max': float(max(d[m].mean() for d in rg)), 'nan': [int(d[m].isna().sum()) for d in rg]} for m in M}

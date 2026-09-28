@@ -16,7 +16,7 @@ os.makedirs(OUT, exist_ok=True)
 PROMPT = "اكتب رسالة رسمية باللغة العربية بعنوان 'الموضوع: {q}' بدءًا بـ 'السيد/السيدة المحترم/ة' وانتهاء بـ 'مع التحية، مؤسسة مسك'"
 MAX_IN, MAX_OUT = 128, 1024
 tok = M2M100Tokenizer.from_pretrained('facebook/m2m100_418M', src_lang='ar', tgt_lang='ar')
-tr_df = pd.read_csv(f'{D}/train.csv', encoding='utf-8-sig'); dv_df = pd.read_csv(f'{D}/dev.csv', encoding='utf-8-sig')
+tr_df = pd.read_csv(f'{D}/train.csv', encoding='utf-16', sep='\t'); dv_df = pd.read_csv(f'{D}/dev.csv', encoding='utf-16', sep='\t')
 for df in (tr_df, dv_df):
     df['ground_truth'] = df['ground_truth'].str.replace('\n', ' ')
 
@@ -58,15 +58,16 @@ json.dump({'results': {str(k): v for k, v in results.items()}, 'best_lr': best_l
           open(f'{OUT}/selection.json', 'w'), ensure_ascii=False, indent=1, default=str)
 print('BEST LR', best_lr, flush=True)
 model = M2M100ForConditionalGeneration.from_pretrained(f'{OUT}/lr{best_lr:g}/best').to('cuda' if torch.cuda.is_available() else 'cpu').eval()
-test = pd.read_csv(f'{D}/test.csv', encoding='utf-8-sig')
+TEST_IDS = [e['doc_id'] for e in json.load(open(os.path.join(HERE, '..', 'data', 'inputs.json'), encoding='utf-8'))['test']]
+test = pd.read_csv(f'{D}/test.csv', encoding='utf-16', sep='\t')
 for i, seed in enumerate((1, 2, 3), 1):
     set_seed(seed); rows = []
-    for q, gt in zip(test['question'], test['ground_truth']):
+    for doc_id, q, gt in zip(TEST_IDS, test['question'], test['ground_truth']):
         x = tok(PROMPT.format(q=q), return_tensors='pt', truncation=True, max_length=MAX_IN).to(model.device)
         with torch.no_grad():
             o = model.generate(**x, max_length=1024, min_length=128, temperature=0.3, top_k=50, top_p=0.95,
                                do_sample=True, no_repeat_ngram_size=3, forced_bos_token_id=tok.get_lang_id('ar'))
-        rows.append({'question': q, 'ground_truth': gt, 'answer': tok.decode(o[0], skip_special_tokens=True)})
-    pd.DataFrame(rows).to_csv(f'{OUT}/gen_run{i}.csv', index=False, encoding='utf-8-sig')
+        rows.append({'doc_id': doc_id, 'question': q, 'ground_truth': gt, 'answer': tok.decode(o[0], skip_special_tokens=True)})
+    pd.DataFrame(rows).to_csv(f'{OUT}/gen_run{i}.csv', index=False, encoding='utf-16', sep='\t')
     print('saved run', i, flush=True)
 print('ALL DONE', flush=True)

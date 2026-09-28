@@ -28,10 +28,10 @@ def prof(texts, gts, types):
 
 if __name__ == '__main__':
     sets = json.loads(sys.argv[1])
-    test = pd.read_csv(E + 'test.csv', encoding='utf-8-sig')
+    test = pd.read_csv(E + 'test.csv', encoding='utf-16', sep='\t')
     types = [qtype(q) for q in test.question]; gts = test.ground_truth.astype(str).tolist()
     cols = {'الخطابات الحقيقية (مرجع)': prof(gts, gts, types)}
     for name, path in sets.items():
-        d = pd.read_csv(path, encoding='utf-8-sig'); assert list(d.question) == list(test.question)
+        d = pd.read_csv(path, encoding='utf-16', sep='\t'); assert list(d.question) == list(test.question)
         cols[name] = prof(d.answer.astype(str).tolist(), gts, types)
-    out = pd.DataFrame(cols).round(3); print(out.to_string()); out.to_csv(sys.argv[2], encoding='utf-8-sig')
+    out = pd.DataFrame(cols).round(3); print(out.to_string()); out.to_csv(sys.argv[2], encoding='utf-16', sep='\t')

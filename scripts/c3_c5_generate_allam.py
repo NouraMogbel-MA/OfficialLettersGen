@@ -19,7 +19,7 @@ enc = lambda text: tok.apply_chat_template([{'role': 'user', 'content': text}], 
 for seed in seeds:
     for cond in conds:
         path = f'{OUT}/gen_{cond}_run{seed}.csv'
-        done = pd.read_csv(path, encoding='utf-8-sig') if os.path.exists(path) else pd.DataFrame(columns=['i', 'answer', 'new_tokens', 'prompt_tokens'])
+        done = pd.read_csv(path, encoding='utf-16', sep='\t') if os.path.exists(path) else pd.DataFrame(columns=['i', 'answer', 'new_tokens', 'prompt_tokens'])
         done = done[[c for c in ('i', 'answer', 'new_tokens', 'prompt_tokens') if c in done]]
         have = set(done.i.astype(int)); rows = done.to_dict('records')
         todo = sorted([p for p in P if p['i'] not in have], key=lambda p: len(p[cond]))
@@ -35,10 +35,11 @@ for seed in seeds:
                 gen = seq[x['input_ids'].shape[1]:]
                 rows.append({'i': p['i'], 'answer': tok.decode(gen, skip_special_tokens=True).strip(),
                              'new_tokens': int((gen != tok.pad_token_id).sum()), 'prompt_tokens': int(x['attention_mask'][k].sum())})
-            pd.DataFrame(rows).to_csv(path, index=False, encoding='utf-8-sig')
+            pd.DataFrame(rows).to_csv(path, index=False, encoding='utf-16', sep='\t')
             print(cond, seed, len(rows), round((time.time() - t0) / 60, 1), 'min', flush=True)
         df = pd.DataFrame(rows).sort_values('i')
         df.insert(0, 'question', [data[int(i)]['question'] for i in df.i]); df.insert(1, 'ground_truth', [data[int(i)]['letter'] for i in df.i])
-        df.to_csv(path, index=False, encoding='utf-8-sig')
+        df.insert(0, 'doc_id', [data[int(i)]['doc_id'] for i in df.i])
+        df.to_csv(path, index=False, encoding='utf-16', sep='\t')
         print('saved', path, len(df), round((time.time() - t0) / 60, 1), 'min', flush=True)
 print('ALLAM DONE', flush=True)
