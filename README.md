@@ -104,4 +104,4 @@ The GPU scripts were run on Google Colab (NVIDIA L4). Model weights are not incl
 
 ## Citation
 
-Almogbel, Noura (2026). تقنيات التوجيه اللغوي والتقييم في الكتابة الإدارية باستخدام نماذج اللغة الكبيرة [Language Prompt Techniques and Evaluation for Administrative Writing Using LLMs] (Master's thesis). Department of Arabic Language and Literature.
+Almogbel, Noura (2026). تقنيات التوجيه اللغوي والتقييم في الكتابة الإدارية باستخدام نماذج اللغة الكبيرة [Language Prompt Techniques and Evaluation for Administrative Writing Using LLMs] (Master's thesis). Department of Arabic Language and Literature, King Saud University, Riyadh(SA). 
