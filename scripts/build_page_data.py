@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Build docs/data.json for the GitHub Pages viewer from the files of this repository.
+# Build docs/data.js for the local viewer (docs/index.html) from the files of this repository.
 # usage (from the repository root): python scripts/build_page_data.py
 import os, re, json
 import pandas as pd
@@ -57,6 +57,8 @@ for key, name, model in METHODS:
                     'honorific': round(100 * L[key]['mean']['لقب التوقير مطابق للخطاب الحقيقي'])})
 real = {'distinctive': round(100 * L['real']['mean']['مميز (داخل الفئة الصحيحة)'])}
 os.makedirs(J('docs'), exist_ok=True)
-json.dump({'methods': [{'key': k, 'name': n, 'model': m} for k, n, m in METHODS], 'summary': summary, 'real': real,
-           'letters': letters}, open(J('docs', 'data.json'), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
-print('letters', len(letters), 'size KB', os.path.getsize(J('docs', 'data.json')) // 1024)
+data = {'methods': [{'key': k, 'name': n, 'model': m} for k, n, m in METHODS], 'summary': summary, 'real': real, 'letters': letters}
+# a script file, not JSON, so that index.html opens straight from the disk (a browser does not fetch files from file://)
+with open(J('docs', 'data.js'), 'w', encoding='utf-8') as f:
+    f.write('window.DATA = ' + json.dumps(data, ensure_ascii=False, separators=(',', ':')) + ';\n')
+print('letters', len(letters), 'size KB', os.path.getsize(J('docs', 'data.js')) // 1024)

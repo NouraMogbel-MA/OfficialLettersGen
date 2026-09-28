@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>OfficialLettersGen: عرض الخطابات</title>
+<title>عرض الخطابات</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
@@ -84,17 +84,18 @@ td.num { text-align: center; }
   <div class="tablewrap"><table id="summary"></table></div>
   <p class="note">الأمانة وصحة الإجابة درجتان بين الصفر والواحد من إطار تقييم التوليد المعزز بالاسترجاع (<span class="en">RAGAS</span>). والنسب الأخرى نسبة الخطابات. والأرقام متوسط المحاولات الثلاث، وقد حُسبت على البيانات الكاملة قبل الإخفاء. ودرجة الأمانة في كل بطاقة هي درجة ذلك الخطاب وحده.</p>
 </main>
+<script src="data.js"></script>
 <script>
 let D = null, cur = 0, run = 0, list = [];
 const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
-const lat = s => esc(s).replace(/[A-Za-z][A-Za-z0-9.\-]*(?: [A-Za-z0-9][A-Za-z0-9.\-]*)*/g, m => `<span class="en">${m}</span>`);
-fetch('data.json').then(r => r.json()).then(d => {
+const lat = s => esc(s).replace(/[0-9]*[A-Za-z][A-Za-z0-9.\-]*(?: [A-Za-z0-9][A-Za-z0-9.\-]*)*/g, m => `<span class="en">${m}</span>`);
+(d => {
   D = d;
   const types = [...new Set(d.letters.map(l => l.type))];
   $('#type').innerHTML += types.map(t => `<option>${esc(t)}</option>`).join('');
   fillList(); render(); summary();
-});
+})(window.DATA);
 function fillList() {
   const t = $('#type').value;
   list = D.letters.map((l, i) => i).filter(i => !t || D.letters[i].type === t);

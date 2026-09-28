@@ -64,9 +64,9 @@ The key for the OpenAI API is read from the `OPENAI_API_KEY` environment variabl
 
 **Note:** generated letters are drafts and must be reviewed before use.
 
-## Browse the letters online
+## Browse the letters
 
-https://nouramogbel-ma.github.io/OfficialLettersGen/ shows the 75 test letters: the information given to the model, the original letter, and the letters written by the five methods side by side, with each method's prompt and the faithfulness score of each letter. The page (`docs/`) is built by `scripts/build_page_data.py`.
+Open `docs/index.html` in a web browser (double-click it after downloading or cloning the repository; no installation is needed). It shows the 75 test letters: the information given to the model, the original letter, and the letters written by the five methods side by side, with each method's prompt and the faithfulness score of each letter. Its data file `docs/data.js` is built by `scripts/build_page_data.py`.
 
 ## Demo (runs locally)
 
