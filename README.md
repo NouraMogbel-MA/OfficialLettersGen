@@ -66,7 +66,7 @@ The key for the OpenAI API is read from the `OPENAI_API_KEY` environment variabl
 
 ## Browse the letters
 
-Open `docs/index.html` in a web browser (double-click it after downloading or cloning the repository; no installation is needed). It shows the 75 test letters: the information given to the model, the original letter, and the letters written by the five methods side by side, with each method's prompt and the faithfulness score of each letter. Its data file `docs/data.js` is built by `scripts/build_page_data.py`.
+Download the repository (the green **Code** button, then **Download ZIP**, and unzip it) or clone it, then open `docs/index.html` in a web browser by double-clicking it. No installation, server or internet connection is needed; the page is not published online. It shows the 75 test letters: the information given to the model, the original letter, and the letters written by the five methods side by side, with each method's prompt and the faithfulness score of each letter. Its data file `docs/data.js` is built by `scripts/build_page_data.py`.
 
 ## Demo (runs locally)
 
