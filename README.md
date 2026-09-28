@@ -64,6 +64,10 @@ The key for the OpenAI API is read from the `OPENAI_API_KEY` environment variabl
 
 **Note:** generated letters are drafts and must be reviewed before use.
 
+## Browse the letters online
+
+https://nouramogbel-ma.github.io/OfficialLettersGen/ shows the 75 test letters: the information given to the model, the original letter, and the letters written by the five methods side by side, with each method's prompt and the faithfulness score of each letter. The page (`docs/`) is built by `scripts/build_page_data.py`.
+
 ## Demo (runs locally)
 
 `app/app.py` is a small Streamlit interface for trying the methods on your own computer. It is not hosted online. It needs Python 3.10 or later and an NVIDIA GPU with about 16 GB of memory.

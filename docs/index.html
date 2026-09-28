@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OfficialLettersGen: عرض الخطابات</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f7f6f2; --panel: #ffffff; --ink: #1f2328; --muted: #5f6670; --line: #e3e0d8;
+  --accent: #0f6b5c; --accent-soft: #e3f1ee; --orig: #fdf6e3; --orig-line: #e8d9a8;
+  --shadow: 0 1px 2px rgba(0,0,0,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #15171a; --panel: #1e2125; --ink: #e8e6e1; --muted: #a2a8b0; --line: #30353b;
+    --accent: #5cc3ae; --accent-soft: #1f3530; --orig: #2a261b; --orig-line: #4d4430;
+    --shadow: none;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: "Noto Naskh Arabic", "Traditional Arabic", serif; font-size: 17px; line-height: 1.8; }
+.en { font-family: "Times New Roman", Times, serif; direction: ltr; unicode-bidi: isolate; }
+header { padding: 28px 16px 12px; max-width: 1400px; margin: 0 auto; }
+h1 { font-size: 26px; margin: 0 0 4px; }
+.lead { color: var(--muted); margin: 0; max-width: 900px; }
+.lead a { color: var(--accent); }
+main { max-width: 1400px; margin: 0 auto; padding: 0 16px 40px; }
+.controls { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; background: var(--panel); border: 1px solid var(--line);
+  border-radius: 10px; padding: 12px 14px; box-shadow: var(--shadow); position: sticky; top: 0; z-index: 5; }
+.controls label { color: var(--muted); font-size: 15px; }
+select { font: inherit; font-size: 15px; padding: 4px 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--panel); color: var(--ink); max-width: 100%; }
+#letter { min-width: 260px; flex: 1; }
+.runs button, .nav button { font: inherit; font-size: 15px; padding: 3px 12px; border: 1px solid var(--line); background: var(--panel); color: var(--ink); border-radius: 6px; cursor: pointer; }
+.runs button.on { background: var(--accent); color: #fff; border-color: var(--accent); }
+.runs, .nav { display: flex; gap: 6px; align-items: center; }
+.top { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; box-shadow: var(--shadow); min-width: 0; }
+.card h2 { font-size: 17px; margin: 0 0 2px; }
+.card .sub { color: var(--muted); font-size: 14px; margin-bottom: 8px; }
+.card.orig { background: var(--orig); border-color: var(--orig-line); }
+.text { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 16px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 14px; margin-top: 14px; }
+.badge { display: inline-block; font-size: 13px; background: var(--accent-soft); color: var(--accent); border-radius: 999px; padding: 0 10px; margin-inline-start: 6px; }
+details { margin-top: 8px; border-top: 1px dashed var(--line); padding-top: 6px; }
+summary { cursor: pointer; color: var(--accent); font-size: 14px; }
+details .text { font-size: 14px; color: var(--muted); max-height: 320px; overflow: auto; margin-top: 6px; }
+table { width: 100%; border-collapse: collapse; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; font-size: 15px; }
+th, td { padding: 8px 10px; border-bottom: 1px solid var(--line); text-align: right; }
+th { background: var(--accent-soft); font-weight: 600; }
+td.num { text-align: center; }
+.section-title { font-size: 20px; margin: 30px 0 8px; }
+.note { color: var(--muted); font-size: 14px; margin-top: 8px; }
+.tablewrap { overflow-x: auto; }
+@media (max-width: 760px) { .top { grid-template-columns: 1fr; } body { font-size: 16px; } h1 { font-size: 22px; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>كتابة الخطاب الإداري السعودي بنماذج اللغة</h1>
+  <p class="lead">تعرض هذه الصفحة خطابات الاختبار الخمسة والسبعين في رسالة الماجستير "تقنيات التوجيه اللغوي والتقييم في الكتابة الإدارية باستخدام نماذج اللغة الكبيرة"، للباحثة نورة المقبل. ولكل خطاب: معلوماته، والخطاب الأصلي، والخطابات التي كتبتها الطرق الخمس. في طريقتين دُرّب نموذج فيسبوك <span class="en">m2m100</span>، وفي ثلاث طرق وُجّه نموذج علّام <span class="en">7B Instruct Preview</span> بالأمر وحده. والبيانات الشخصية مُخفاة بعبارة [anonymized]. <a href="https://github.com/NouraMogbel-MA/OfficialLettersGen">المستودع</a></p>
+</header>
+<main>
+  <div class="controls">
+    <label for="type">النوع</label>
+    <select id="type"><option value="">كل الأنواع</option></select>
+    <label for="letter">الخطاب</label>
+    <select id="letter"></select>
+    <div class="nav"><button id="prev" title="السابق">السابق</button><button id="next" title="التالي">التالي</button></div>
+    <div class="runs"><span style="color:var(--muted);font-size:15px">المحاولة</span>
+      <button data-run="0" class="on">1</button><button data-run="1">2</button><button data-run="2">3</button></div>
+  </div>
+
+  <div class="top">
+    <div class="card"><h2>المعلومات التي تُعطى للنموذج</h2><div class="sub">السؤال ومعلومات الخطاب، في الطرق الأربع الأخيرة</div><div class="text" id="info"></div></div>
+    <div class="card orig"><h2>الخطاب الأصلي</h2><div class="sub">من المدونة</div><div class="text" id="original"></div></div>
+  </div>
+
+  <div class="grid" id="methods"></div>
+
+  <h2 class="section-title">النتائج العامة</h2>
+  <div class="tablewrap"><table id="summary"></table></div>
+  <p class="note">الأمانة وصحة الإجابة درجتان بين الصفر والواحد من إطار تقييم التوليد المعزز بالاسترجاع (<span class="en">RAGAS</span>). والنسب الأخرى نسبة الخطابات. والأرقام متوسط المحاولات الثلاث، وقد حُسبت على البيانات الكاملة قبل الإخفاء. ودرجة الأمانة في كل بطاقة هي درجة ذلك الخطاب وحده.</p>
+</main>
+<script>
+let D = null, cur = 0, run = 0, list = [];
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const lat = s => esc(s).replace(/[A-Za-z][A-Za-z0-9.\-]*(?: [A-Za-z0-9][A-Za-z0-9.\-]*)*/g, m => `<span class="en">${m}</span>`);
+fetch('data.json').then(r => r.json()).then(d => {
+  D = d;
+  const types = [...new Set(d.letters.map(l => l.type))];
+  $('#type').innerHTML += types.map(t => `<option>${esc(t)}</option>`).join('');
+  fillList(); render(); summary();
+});
+function fillList() {
+  const t = $('#type').value;
+  list = D.letters.map((l, i) => i).filter(i => !t || D.letters[i].type === t);
+  $('#letter').innerHTML = list.map(i => `<option value="${i}">${i + 1}. ${esc(D.letters[i].type)}: ${esc(D.letters[i].subject)}</option>`).join('');
+  if (!list.includes(cur)) cur = list[0];
+  $('#letter').value = cur;
+}
+function render() {
+  const L = D.letters[cur];
+  $('#info').textContent = L.info;
+  $('#original').textContent = L.original;
+  $('#methods').innerHTML = D.methods.map(m => {
+    const M = L.methods[m.key], R = M.runs[run];
+    const f = R.faithfulness === null ? '–' : R.faithfulness.toFixed(2);
+    return `<div class="card"><h2>${esc(m.name)}<span class="badge">الأمانة ${f}</span></h2>
+      <div class="sub">${lat(m.model)}</div><div class="text">${esc(R.text)}</div>
+      <details><summary>الأمر الذي أُرسل إلى النموذج</summary><div class="text">${esc(M.prompt)}</div></details></div>`;
+  }).join('');
+}
+function summary() {
+  const rows = D.summary.map(s => `<tr><td>${esc(s.name)}</td><td>${lat(s.model)}</td><td class="num">${s.faithfulness.toFixed(2)}</td><td class="num">${s.correctness.toFixed(2)}</td><td class="num">${s.distinctive}%</td><td class="num">${s.honorific}%</td><td class="num">${s.keypoints}%</td></tr>`).join('');
+  $('#summary').innerHTML = `<tr><th>الطريقة</th><th>النموذج</th><th>الأمانة</th><th>صحة الإجابة</th><th>الأنماط المميزة</th><th>لقب التوقير يوافق الأصل</th><th>النقاط الأساسية المذكورة</th></tr>${rows}
+    <tr><td>الخطابات الأصلية</td><td></td><td class="num">–</td><td class="num">–</td><td class="num">${D.real.distinctive}%</td><td class="num">100%</td><td class="num">100%</td></tr>`;
+}
+$('#type').onchange = () => { fillList(); render(); };
+$('#letter').onchange = e => { cur = +e.target.value; render(); };
+$('#prev').onclick = () => { const k = list.indexOf(cur); cur = list[(k - 1 + list.length) % list.length]; $('#letter').value = cur; render(); };
+$('#next').onclick = () => { const k = list.indexOf(cur); cur = list[(k + 1) % list.length]; $('#letter').value = cur; render(); };
+document.querySelectorAll('.runs button').forEach(b => b.onclick = () => {
+  document.querySelectorAll('.runs button').forEach(x => x.classList.remove('on')); b.classList.add('on'); run = +b.dataset.run; render();
+});
+</script>
+</body>
+</html>
