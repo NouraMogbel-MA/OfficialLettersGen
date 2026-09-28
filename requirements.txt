@@ -1,0 +1,22 @@
+# Training and generation (run on a single GPU; the thesis used Google Colab, NVIDIA L4)
+torch>=2.3
+transformers>=4.46
+datasets
+accelerate
+sentencepiece
+
+# Data, extraction and evaluation
+pandas
+numpy
+openpyxl
+openai>=1.40
+
+# RAGAS 0.2.15 needs the 0.3 LangChain line
+ragas==0.2.15
+langchain<0.4
+langchain-community<0.4
+langchain-core<0.4
+langchain-openai<0.4
+
+# Demo
+streamlit

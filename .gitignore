@@ -1,0 +1,7 @@
+.env
+__pycache__/
+*.pyc
+ragas_in/
+m2m_fields/
+allam_out/
+outputs/c1_m2m_question/run/
